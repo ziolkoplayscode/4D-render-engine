@@ -6,6 +6,26 @@ import os
 from moviepy.video.io.ImageSequenceClip import ImageSequenceClip as mpy
 from tqdm import tqdm
 
+def rotate_4d(vector, theta, plane='xw'):
+  """
+  Rotates a 4D vector (x, y, z, w) by angle theta in specified plane.
+  """
+  c, s = np.cos(theta), np.sin(theta)
+  
+  # Initialize 4x4 Identity Matrix
+  R = np.eye(4)
+    
+  # Define rotation matrix for a plane (e.g., xw plane)
+  if plane == 'xw':
+      R[0, 0] = c; R[0, 3] = -s
+      R[3, 0] = s; R[3, 3] = c
+  elif plane == 'xy':
+      R[0, 0] = c; R[0, 1] = -s
+      R[1, 0] = s; R[1, 1] = c
+  # ... define other planes as needed
+  
+  return np.dot(R, vector)
+
 
 fig = plt.figure()
 ax = fig.add_subplot(projection='3d')
@@ -18,7 +38,7 @@ x = [-1,-1,-1,-1, 1, 1, 1, 1,-1,-1,-1,-1, 1, 1, 1, 1]
 y = [-1,-1, 1, 1,-1,-1, 1, 1,-1,-1, 1, 1,-1,-1, 1, 1]
 z = [-1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 1]
 
-w = [-1,-1,-1,-1,-1,-1,-1,-1,1,1,1,1,1,1,1,1]
+w = [-1,-1,-1,-1,-1,-1,-1,-1, 1, 1, 1, 1, 1, 1, 1, 1]
 
 s = [0,0,0,7,7,7,1,5,4,6,2,3]
 e = [1,2,4,6,5,3,5,4,6,2,3,1]
