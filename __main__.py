@@ -139,7 +139,7 @@ def keyframe(folder, sframe, eframe,vectors,origin,rotate_plane='xy',rotate_thet
       #xo, yo, zo, wo = xo+xt, yo+yt, zo+zt, wo+wt
       xv[o], yv[o], zv[o], wv[o] = rotate([xv[o], yv[o], zv[o], wv[o]], (np.pi/180)*rotate_theta, rotate_plane)
     update_tick([xv,yv,zv,wv],[xo, yo, zo, wo], fov=90,elev=30)
-    plt.savefig(os.path.join(folder, os.path.join('tmp',f'{int(sframe+n)}.png')))
+    plt.savefig(os.path.join(folder, os.path.join('tmp',f'{int(sframe+n)}.png')), pad_inches=0, bbox_inches="tight")
   return list(zip(xv,yv,zv,wv))
 
 def animation(folder, frames, fps):
